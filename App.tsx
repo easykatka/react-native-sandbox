@@ -1,21 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
+import React from 'react';
+import { StyleSheet, View, FlatList, Button } from 'react-native';
+import { TodoItem } from './components/TodoItem';
+import { TodoInput } from './components/TodoInput';
+
+export interface ITodo {
+	id: string,
+	value: string
+}
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+	const [todoList, setTodoList] = React.useState([] as ITodo[])
+	const [modalFlag, setModalFlag] = React.useState(false)
+	const submitHandler = (term: string) => {
+		setTodoList((todoList) => [...todoList, { id: Math.random().toString(), value: term }
+		])
+	}
+	const onDelete = (id: string) => {
+		setTodoList(todoList => todoList.filter(item => id !== item.id))
+	}
+
+	return (
+		<View style={styles.screen}>
+			<Button title='Add new todo' onPress={() => setModalFlag(true)} />
+			<TodoInput submitHandler={submitHandler} modalFlag={modalFlag} setModalFlag={setModalFlag} />
+			<FlatList keyExtractor={(item: ITodo, index) => item.id}
+				data={todoList} renderItem={itemData =>
+					<TodoItem onDelete={onDelete} item={itemData.item} />}>
+			</FlatList>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+	screen: {
+		marginTop: 50,
+		padding: 50,
+	},
+
 });
