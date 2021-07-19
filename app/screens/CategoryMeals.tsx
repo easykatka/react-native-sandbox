@@ -1,18 +1,21 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {NavigationStackScreenComponent} from "react-navigation-stack";
-import {CATEGORIES} from "../data/dummy-data";
+import {CATEGORIES, MEALS} from "../data/dummy-data";
+import {IMeal} from "../models/meal";
 
 export const CategoryMeals: NavigationStackScreenComponent = ({navigation}) => {
 
     const categoryId = navigation.getParam('categoryId')
-    const selectedCategory = CATEGORIES.find(cat => cat.id === categoryId)
+    const displayedMeals = MEALS.filter(meal => meal.categoryIds.includes(categoryId))
+    const renderMealItem = ({item}: { item: IMeal }) => <View><Text>{item.title}</Text></View>
 
 
     return (
         <View style={styles.screen}>
-            <Text> CategoryMeals screen </Text>
-            <Text> {selectedCategory?.title} </Text>
+            <FlatList data={displayedMeals} keyExtractor={(item, index) => item.id}
+                      renderItem={renderMealItem}/>
+
         </View>
     )
 };
