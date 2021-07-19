@@ -1,15 +1,18 @@
 import React from 'react'
-import {Text, View} from "react-native";
 import * as Font from 'expo-font';
 import {observable} from "mobx";
 import {observer} from "mobx-react";
 
+import MealsNavigator from "./app/navigation/"
+import {enableScreens} from 'react-native-screens'
+
 @observer
 export default class App extends React.Component {
-	@observable fontLoaded = false;
+	@observable fontLoaded: boolean = false;
 
 	constructor(props: any) {
 		super(props)
+		enableScreens();
 		this.init();
 	};
 
@@ -20,13 +23,13 @@ export default class App extends React.Component {
 			'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
 		});
 		this.fontLoaded = true;
+
 	};
 
 	render() {
+		if (!this.fontLoaded) return null;
 		return (
-			<View>
-				<Text>open up js</Text>
-			</View>
+			<MealsNavigator/>
 		)
 	}
 };

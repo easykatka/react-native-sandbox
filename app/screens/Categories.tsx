@@ -1,20 +1,23 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
+import {CATEGORIES} from "../data/dummy-data";
+import {NavigationStackScreenComponent} from "react-navigation-stack";
+import {ICategories} from "../models/category";
+import {CategoryGridItem} from "../components/CategoryGrid";
 
-export const Categories: React.FC = (props) => {
+
+export const Categories: NavigationStackScreenComponent = ({navigation}) => {
+    const renderItem = ({item}: { item: ICategories }) => <CategoryGridItem item={item} navigation={navigation}/>
     return (
-        <View style={styles.screen}>
-            <Text> Categories screen </Text>
-        </View>
+        <FlatList numColumns={2} keyExtractor={(item, index) => item.id} data={CATEGORIES}
+                  renderItem={renderItem}/>
     )
 };
-
 const styles = StyleSheet.create({
-        screen: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center'
-        }
+    screen: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
-)
+})
 

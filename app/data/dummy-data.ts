@@ -1,7 +1,6 @@
 import Category from '../models/category'
 
 
-
 export const CATEGORIES = [
 
     new Category('c1', 'Italian', '#f5428d'),
@@ -13,5 +12,5 @@ export const CATEGORIES = [
     new Category('c7', 'Breakfast', '#9eecff'),
     new Category('c8', 'Asian', '#b9ffb0'),
     new Category('c9', 'French', '#ffc7ff'),
-    new Category('c10', 'Summer', '#47fced')
+    new Category('c10', 'French', '#47fced')
 ]
